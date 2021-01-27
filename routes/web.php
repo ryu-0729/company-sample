@@ -36,3 +36,5 @@ Route::middleware(['auth', 'can:system-higher'])->group(function () {
     Route::post('register', 'Auth\RegisterController@register');
 });
 
+Route::resource('posts', 'PostController');
+
