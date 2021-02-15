@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class PostController extends Controller
     {
         $this->middleware('auth')->except(['index']);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +20,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
-        $posts = Post::all();
+        //$posts = Post::all();
+        $posts = Post::with('user')->get();
+        //dd($posts);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -46,10 +48,13 @@ class PostController extends Controller
             'title' => 'required',
             'body' => 'required',
         ]);
-        Post::create([
-            'title' => $request->title,
-            'body' => $request->body,
-        ]);
+        
+        $post = new Post;
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->user_id = $request->user()->id;
+        $post->save();
+        
         return redirect('/posts');
     }
 
@@ -61,7 +66,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
+        //\DB::enableQueryLog();
         $post = Post::findOrFail($id);
+        //dd(\DB::getQueryLog());
 
         return view('posts.show', [
             'post' => $post,
