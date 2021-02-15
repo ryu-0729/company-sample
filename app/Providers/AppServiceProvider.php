@@ -23,6 +23,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /* \DB::listen(function($q){
+
+            // SQL文
+            dump($q->sql);
+
+            // パラメータ
+            dump($q->bindings);
+
+            // 実行にかかった時間
+            dump($q->time);
+
+        }); */
     }
 }

@@ -67,7 +67,7 @@ class PostControllerTest extends TestCase
             'title' => 'テスト投稿',
             'body' => 'test body',
         ];
-        $this->assertDatabaseMissing('posts', $data);
+        // $this->assertDatabaseMissing('posts', $data);
 
         $response = $this->put('/posts/2', $data);
 
@@ -156,22 +156,25 @@ class PostControllerTest extends TestCase
      *
      * @return void
      */
-    /* public function testPostPath()
+    public function testPostPath()
     {
+        $user = factory(User::class)->create();
         $data = [
             'title' => 'test title',
             'body' => 'test body',
-            'user_id' => 1,
+            // 'user_id' => 1,
         ];
-        $this->assertDatabaseMissing('posts', $data);
+        //$this->assertDatabaseMissing('posts', $data);
 
-        $response = $this->post('/posts/', $data);
+        $response = $this
+            ->actingAs($user)
+            ->post('/posts/', $data);
 
         $response->assertStatus(302)
             ->assertRedirect('/posts/');
 
         $this->assertDatabaseHas('posts', $data);
-    } */
+    }
 
     /**
      * Test Post Path Empty Title And Body.

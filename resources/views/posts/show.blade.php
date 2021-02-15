@@ -24,6 +24,17 @@
             </div>
           </div>
         </div>
+        @forelse($post->comments as $comment)
+          <div class="border-top p-4">
+            <div class="card-body">
+              <p class="card-text">
+                {{ $comment->body }}
+              </p>
+            </div>
+          </div>
+        @empty
+          <p>コメントはまだありません</p>
+        @endforelse
       </div>
     </div>
   </div>
