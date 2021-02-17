@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index']);
+        //$this->middleware('auth')->except(['index']);
     }
     /**
      * Display a listing of the resource.
@@ -54,14 +54,14 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id)->posts;
-        /* $user = User::findOrFail($id);
-        $user_posts = $user->posts; */
-        //dd($user_data);
+        //$user = User::findOrFail($id)->posts;
+        $user = User::findOrFail($id);
+        $user_posts = $user->posts()->get();
+        //dd($user_posts);
         return view('users.show', [
-            /* 'user' => $user,
-            'user_posts' => $user_posts */
             'user' => $user,
+            'user_posts' => $user_posts
+            //'user' => $user,
         ]);
     }
 
@@ -94,8 +94,9 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        User::destroy($id);
+        return redirect('/users');
     }
 }

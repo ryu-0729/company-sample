@@ -5,37 +5,40 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
-        @foreach ($user as $user_data)
+        <div class="card-header">
+            {{ $user->name }}
+        </div>
+
+        <div class="card-body">
+          <p class="card-text">
+            {{ $user->role }}
+          </p>
+        </div>
+
+        <div class="card-footer">
+          登録日時: {{ $user->created_at }}
+          <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+              {!! Form::open(['action' => ['UserController@destroy', $user->id], 'method' => 'delete']) !!}
+              {{ Form::submit('ユーザーの削除', ['class' => 'btn btn-danger']) }}
+              {!! Form::close() !!}
+            </div>
+          </div>
+        </div>
+        @foreach ($user_posts as $post)
           <div class="card-header">
-            {{ $user_data->user->name }}
-          </div>
-
-          <div class="card-body">
-            <p class="card-text">
-              {{ $user_data->user->role }}
-            </p>
-          </div>
-
-          <div class="card-footer">
-            登録日時: {{ $user_data->user->created_at }}
-          </div>
-
-          <div class="card-header">
-            {{ $user_data->title }}
+            {{ $post->title }}
           </div>
           
           <div class="card-body">
-            <p class="card-text">
-              {{ $user_data->body }}
-            </p>
+            {{ $post->body }}
           </div>
 
           <div class="card-footer">
-            投稿日時: {{ $user_data->created_at }}
+            投稿日時: {{ $post->created_at }}
           </div>
         @endforeach
       </div>
-      
     </div>
   </div>
 </div>
