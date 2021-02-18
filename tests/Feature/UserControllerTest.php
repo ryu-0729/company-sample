@@ -23,7 +23,7 @@ class UserControllerTest extends TestCase
     }
 
     /**
-     * Test Get Index
+     * Test Get Show
      *
      * @return void
      */
