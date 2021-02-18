@@ -23,9 +23,10 @@ class AdminController extends Controller
 
     public function restore($id)
     {
-        \DB::table('users')->where('id', $id)->update([
+        /* \DB::table('users')->where('id', $id)->update([
             'deleted_at' => null
-        ]);
+        ]); */
+        User::withTrashed()->where('id', $id)->restore();
 
         return back();
     }
