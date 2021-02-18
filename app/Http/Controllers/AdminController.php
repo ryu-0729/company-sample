@@ -20,4 +20,13 @@ class AdminController extends Controller
             'soft_delete_users' => $soft_delete_users
         ]);
     }
+
+    public function restore($id)
+    {
+        \DB::table('users')->where('id', $id)->update([
+            'deleted_at' => null
+        ]);
+
+        return back();
+    }
 }

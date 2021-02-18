@@ -9,6 +9,12 @@
         <div class="card-header">
           {{ $soft_delete_user->name }}
         </div>
+
+        <div class="card-body">
+          <p class="card-text">
+            <a href="{{ action('AdminController@restore', $soft_delete_user->id) }}" class="btn btn-secondary" type="button">復元する</a>
+          </p>
+        </div>
       </div>
       @endforeach
     </div>

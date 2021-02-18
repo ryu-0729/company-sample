@@ -35,6 +35,7 @@ Route::middleware(['auth', 'can:system-higher'])->group(function () {
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
     Route::get('admin/index', 'AdminController@index')->name('admin.index');
+    Route::get('admin/restore/{id}', 'AdminController@restore')->name('admin.restore');
 });
 
 Route::resource('posts', 'PostController');
