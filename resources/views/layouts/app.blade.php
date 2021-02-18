@@ -66,6 +66,7 @@
                                     </form>
                                     @can('system-higher')
                                         <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        <a class="dropdown-item" href="{{ route('admin.index') }}">{{ __('AdminIndex') }}</a>
                                     @endcan
                                 </div>
                             </li>

@@ -34,6 +34,7 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::middleware(['auth', 'can:system-higher'])->group(function () {
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
+    Route::get('admin/index', 'AdminController@index')->name('admin.index');
 });
 
 Route::resource('posts', 'PostController');
