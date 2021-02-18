@@ -30,4 +30,11 @@ class AdminController extends Controller
 
         return back();
     }
+
+    public function delete($id)
+    {
+        User::where('id', $id)->forceDelete();
+
+        return back();
+    }
 }

@@ -36,6 +36,7 @@ Route::middleware(['auth', 'can:system-higher'])->group(function () {
     Route::post('register', 'Auth\RegisterController@register');
     Route::get('admin/index', 'AdminController@index')->name('admin.index');
     Route::get('admin/restore/{id}', 'AdminController@restore')->name('admin.restore');
+    Route::get('admin/delete/{id}', 'AdminController@delete')->name('admin.delete');
 });
 
 Route::resource('posts', 'PostController');
