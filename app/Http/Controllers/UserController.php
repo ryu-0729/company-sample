@@ -20,8 +20,8 @@ class UserController extends Controller
     {
         // roleが開発者と社員のみ一覧表示
         $role = ['開発者', '社員'];
-        $users = User::whereIn('role', $role)->get();
-        //dd($users->toArray());
+        $per_page = 20;
+        $users = User::whereIn('role', $role)->paginate($per_page);
         return view('users.index', ['users' => $users]);
     }
 
@@ -61,7 +61,6 @@ class UserController extends Controller
         return view('users.show', [
             'user' => $user,
             'user_posts' => $user_posts
-            //'user' => $user,
         ]);
     }
 
