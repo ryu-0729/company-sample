@@ -6,6 +6,9 @@ use App\User;
 use App\Post;
 use Illuminate\Http\Request;
 
+//ログインユーザーの取得のため追記
+use Illuminate\Support\Facades\Auth;
+
 class PostController extends Controller
 {
     public function __construct()
@@ -20,7 +23,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        //$posts = Post::all();
         $posts = Post::with('user')->get();
         //dd($posts);
         return view('posts.index', ['posts' => $posts]);
@@ -66,9 +68,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //\DB::enableQueryLog();
         $post = Post::findOrFail($id);
-        //dd(\DB::getQueryLog());
+        //dd($post);
 
         return view('posts.show', [
             'post' => $post,
@@ -83,7 +84,6 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
         $post = Post::findOrFail($id);
 
         return view('posts.edit', [
