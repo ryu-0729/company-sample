@@ -41,9 +41,6 @@ Route::middleware(['auth', 'can:system-higher'])->group(function () {
 
 Route::resource('posts', 'PostController');
 
-/* Route::get('users', 'UserController@index');
-Route::get('users/{id}', 'UserController@show');
-Route::delete('users/{id}', 'UserController@destroy'); */
 Route::resource('users', 'UserController');
 
 Route::resource('comments', 'CommentController', ['only' => ['store']]);
