@@ -23,7 +23,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')->get();
+        $per_page = 10;
+        $posts = Post::with('user')->paginate($per_page);
         //dd($posts);
         return view('posts.index', ['posts' => $posts]);
     }
