@@ -6,7 +6,8 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-header">
-            {{ $user->name }}
+            {{ $user->name }} <br>
+            <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $user]) }}">編集</a>
         </div>
 
         <div class="card-body">
