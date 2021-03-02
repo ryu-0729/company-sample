@@ -17,14 +17,10 @@
               </ul>
             </div>
           @endif
-          {!! Form::open(['action' => ['PostController@update', $post->id], 'method' => 'put']) !!}
+          {!! Form::open(['action' => ['UserController@update', $user->id], 'method' => 'put']) !!}
           <div class="form-group row">
-            {{ Form::label('title', 'タイトル', ['class' => 'col-md-3 col-form-label']) }}
-            {{ Form::text('title', $post->title, ['class' => 'col-md-9 form-control']) }}
-          </div>
-          <div class="form-group row">
-            {{ Form::label('body', '内容', ['class' => 'col-md-3 col-form-label']) }}
-            {{ Form::text('body', $post->body, ['class' => 'col-md-9 form-control']) }}
+            {{ Form::label('name', 'ユーザー名', ['class' => 'col-md-3 col-form-label']) }}
+            {{ Form::text('name', $user->name, ['class' => 'col-md-9 form-control']) }}
           </div>
           {{ Form::submit('更新', ['class' => 'btn btn-primary']) }}
           {!! Form::close() !!}

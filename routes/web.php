@@ -41,7 +41,9 @@ Route::middleware(['auth', 'can:system-higher'])->group(function () {
 
 Route::resource('posts', 'PostController');
 
-Route::resource('users', 'UserController');
+Route::resource('users', 'UserController')->except([
+    'create', 'store'
+]);
 
 Route::get('ajax/user', 'Ajax\UserController@index');
 Route::get('ajax', 'AjaxUser');

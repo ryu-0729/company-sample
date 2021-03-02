@@ -26,27 +26,6 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\User  $user
@@ -70,9 +49,13 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view('users.edit', [
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -82,9 +65,29 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $validateData = $request->validate([
+            'name' => 'required',
+        ]);
+
+        $user = User::findOrFail($id);
+
+        //変更可能な値を習得するためからの配列を用意
+        $fillData = [];
+
+        //フォームからの値を取得し$fillDataに代入
+        if (isset($request->name)) {
+            $fillData['name'] = $request->name;
+        }
+
+        //$fillDataの数が0以上だった場合に保存
+        if (count($fillData) > 0) {
+            $user->fill($fillData);
+            $user->save();
+        }
+
+        return redirect('/users/' . $id);
     }
 
     /**

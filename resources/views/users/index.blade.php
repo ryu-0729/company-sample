@@ -7,7 +7,7 @@
       @foreach ($users as $user)
       <div class="card">
         <div class="card-header">
-          {{ $user->name }}
+          <a href="{{ action('UserController@show', $user->id) }}">{{ $user->name }}</a>
         </div>
       </div>
       @endforeach
