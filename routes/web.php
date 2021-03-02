@@ -43,5 +43,8 @@ Route::resource('posts', 'PostController');
 
 Route::resource('users', 'UserController');
 
+Route::get('ajax/user', 'Ajax\UserController@index');
+Route::get('ajax', 'AjaxUser');
+
 Route::resource('comments', 'CommentController', ['only' => ['store']]);
 
