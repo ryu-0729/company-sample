@@ -38,3 +38,4 @@ Route::middleware(['auth', 'can:system-higher'])->group(function () {
 
 Route::resource('posts', 'PostController');
 
+Route::resource('comment', 'CommentController', ['only' => 'store']);
