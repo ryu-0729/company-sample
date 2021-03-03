@@ -41,6 +41,14 @@
         @empty
           <p>コメントはまだありません</p>
         @endforelse
+        <div class="col-md-offset-2 col-md-8">
+          {!! Form::open(['route' => ['comments.store', $post->id]]) !!}
+          {{ Form::label('body', 'コメント', ['class' => 'col-md-3 col-form-label']) }}
+          {{ Form::text('body', '', ['class' => 'col-md-9 form-control']) }}
+          {{ Form::hidden('post_id', $post->id) }}
+          {{ Form::submit('コメントする', ['class' => 'btn btn-primary']) }}
+          {!! Form::close() !!}
+        </div>
       </div>
     </div>
   </div>
