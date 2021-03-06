@@ -6,6 +6,8 @@ use App\User;
 use App\Post;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Gate;
+
 //ログインユーザーの取得のため追記
 use Illuminate\Support\Facades\Auth;
 
@@ -87,9 +89,15 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        return view('posts.edit', [
-            'post' => $post,
-        ]);
+        $response = Gate::inspect('update', $post);
+
+        if ($response->allowed()) {
+            return view('posts.edit', [
+                'post' => $post,
+            ]);
+        } else {
+            return redirect('/posts');
+        }
     }
 
     /**
@@ -107,21 +115,27 @@ class PostController extends Controller
         ]);
 
         $post = Post::findOrFail($id);
-        $fillData = [];
-        if (isset($request->title)) {
-            $fillData['title'] = $request->title;
-        }
 
-        if (isset($request->body)) {
-            $fillData['body'] = $request->body;
-        }
+        $response = Gate::inspect('update', $post);
+        
+        if ($response->allowed()) {
+            $fillData = [];
+            if (isset($request->title)) {
+                $fillData['title'] = $request->title;
+            }
 
-        if (count($fillData) > 0) {
-            $post->fill($fillData);
-            $post->save();
-        }
+            if (isset($request->body)) {
+                $fillData['body'] = $request->body;
+            }
 
-        return redirect('/posts/' . $id);
+            if (count($fillData) > 0) {
+                $post->fill($fillData);
+                $post->save();
+            }
+            return redirect('/posts/' . $id);
+        } else {
+            return redirect('/posts');
+        }
     }
 
     /**
@@ -130,9 +144,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        Post::destroy($id);
-        return redirect('/posts');
+        $response = Gate::inspect('delete', $post);
+
+        if ($response->allowed()) {
+            $post->delete();
+            return redirect('/posts');
+        } else {
+            return redirect('/posts');
+        }
+        /* Post::destroy($id);
+        return redirect('/posts'); */
     }
 }
