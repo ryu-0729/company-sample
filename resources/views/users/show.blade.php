@@ -7,7 +7,9 @@
       <div class="card">
         <div class="card-header">
             {{ $user->name }} <br>
-            <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $user]) }}">編集</a>
+            @if ($login_user->id === $user->id)
+              <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $user]) }}">編集</a>
+            @endif
         </div>
 
         <div class="card-body">

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 
 //ログインユーザーの取得のため追記
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UserPost; //追記
 
 class PostController extends Controller
 {
@@ -47,13 +48,8 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserPost $request)
     {
-        $validateData = $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-        ]);
-        
         $post = new Post;
         $post->title = $request->title;
         $post->body = $request->body;
@@ -106,13 +102,8 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserPost $request, $id)
     {
-        $validateData = $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-        ]);
-
         $post = Post::findOrFail($id);
 
         $response = Gate::inspect('update', $post);
