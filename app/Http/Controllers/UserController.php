@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 
+//ログインユーザーの取得のため追記
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\EditUser; //追記
+
 class UserController extends Controller
 {
     public function __construct()
@@ -52,10 +56,16 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
+        $login_user_id = Auth::id();
 
-        return view('users.edit', [
-            'user' => $user,
-        ]);
+        //簡易的な権限設定
+        if ($user->id === $login_user_id) {
+            return view('users.edit', [
+                'user' => $user,
+            ]);
+        } else {
+            return redirect('/users');
+        }
     }
 
     /**
@@ -65,12 +75,8 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditUser $request, $id)
     {
-        $validateData = $request->validate([
-            'name' => 'required',
-        ]);
-
         $user = User::findOrFail($id);
 
         //変更可能な値を習得するためからの配列を用意
