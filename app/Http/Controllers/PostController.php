@@ -27,7 +27,15 @@ class PostController extends Controller
     public function index()
     {
         $per_page = 10;
-        $posts = Post::with('user')->paginate($per_page);
+
+        //投稿したユーザーも取得
+        $posts = Post::with('user')->where(function ($query) {
+            //検索で入力された値があればデータをあいまい検索で絞る
+            if ($search = request('search')) {
+                $query->where('title', 'LIKE', "%{$search}%")
+                    ->orWhere('body', 'LIKE', "%{$search}%");
+            }
+        })->paginate($per_page);
         //dd($posts);
         return view('posts.index', ['posts' => $posts]);
     }

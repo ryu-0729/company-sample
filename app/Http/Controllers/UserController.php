@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->except(['index']);
     }
     /**
      * Display a listing of the resource.
@@ -22,10 +22,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        // roleが開発者と社員のみ一覧表示
         $role = ['開発者', '社員'];
         $per_page = 20;
-        $users = User::whereIn('role', $role)->paginate($per_page);
+
+        //roleが開発者と社員のみ一覧表示
+        $users = User::whereIn('role', $role)->where(function ($query) {
+            //検索で入力された値があればデータをあいまい検索で絞る
+            if ($search = request('search')) {
+                $query->where('name', 'LIKE', "%{$search}%");
+            }
+        })->paginate($per_page);
+        //dd($users);
         return view('users.index', ['users' => $users]);
     }
 

@@ -4,6 +4,12 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-8">
+    <form class="form-inline my-2 my-lg-0 ml-2">
+      <div class="form-group">
+        <input type="search" class="form-control mr-sm-2" name="search"  value="{{request('search')}}" placeholder="キーワードを入力" aria-label="検索...">
+      </div>
+      <input type="submit" value="検索" class="btn btn-info">
+    </form>
       <a class="btn btn-primary" href="{{ route('posts.create') }}">新規投稿</a>
       @foreach ($posts as $post)
       <div class="card">
@@ -23,7 +29,7 @@
       </div>
       @endforeach
     </div>
-    {{ $posts->links() }}
+    {{ $posts->appends(request()->input())->links() }}
   </div>
 </div>
 @endsection
