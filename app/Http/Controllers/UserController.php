@@ -20,7 +20,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $role = ['開発者', '社員'];
         $per_page = 20;
@@ -30,9 +30,9 @@ class UserController extends Controller
             //検索で入力された値があればデータをあいまい検索で絞る
             if ($search = request('search')) {
                 $query->where('name', 'LIKE', "%{$search}%");
+                //dd($search);
             }
         })->paginate($per_page);
-        //dd($users);
         return view('users.index', ['users' => $users]);
     }
 
