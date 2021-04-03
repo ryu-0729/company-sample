@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+//2行追記
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+
 class LoginController extends Controller
 {
     /*
@@ -36,5 +40,23 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    //ログイン時にAPIトークンを更新する
+    protected function authenticated(Request $request, $user)
+    {
+        $user->update(['api_token' => Str::random(80)]);
+    }
+
+    //ログアウト時にAPIトークンを消す
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        $user->update(['api_token' => null]);
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return $this->loggedOut($request) ?: redirect('/');
     }
 }
